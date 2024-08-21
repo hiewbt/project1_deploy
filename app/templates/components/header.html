@@ -1,0 +1,55 @@
+{% block header %}
+{% load i18n %}
+{% load static %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" data-navbar-on-scroll="data-navbar-on-scroll">
+    <div class="container">
+        <a class="navbar-brand d-inline-flex" href="/">
+            <img class="d-inline-block" src="{% static 'images/gallery/logo.svg' %}" alt="logo" />
+            <span class="text-1000 fs-3 fw-bold ms-2 text-gradient">{% trans "foodwaGon" %}</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <div class="d-flex flex-grow-1 justify-content-center align-items-center">
+                <form action="{% url 'app:search' %}" method="get" class="d-flex mt-4 mt-lg-0 ms-lg-auto ms-xl-0 align-items-center">
+                    <div class="input-group">
+                        <input
+                            class="form-control border-0 input-box bg-100"
+                            type="search"
+                            id="search-input"
+                            name="q"
+                            placeholder="Search Food"
+                            aria-label="Search"
+                            value="{{ request.GET.q }}"
+                        />
+                        <button class="btn btn-outline-secondary border-0" type="submit">
+                            <i class="fas fa-search text-primary"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <div class="d-flex align-items-center">
+                {% if user.is_authenticated %}
+                <!-- User is logged in -->
+                <a href="{% url 'app:cart' %}" class="btn btn-white shadow-warning text-warning me-2">
+                    <i class="fas fa-sign-out-alt me-2"></i>{% trans "Cart" %}
+                </a>
+                <a href="{% url 'app:logout' %}" class="btn btn-white shadow-warning text-warning me-2">
+                    <i class="fas fa-sign-out-alt me-2"></i>{% trans "Logout" %}
+                </a>
+                {% else %}
+                <!-- User is not logged in -->
+                <a href="{% url 'app:login' %}" class="btn btn-white shadow-warning text-warning me-2">
+                    <i class="fas fa-user me-2"></i>{% trans "Login" %}
+                </a>
+                <a href="{% url 'app:sign-up' %}" class="btn btn-primary">
+                    <i class="fas fa-user-plus me-2"></i>{% trans "Sign Up" %}
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</nav>
+{% endblock %}
